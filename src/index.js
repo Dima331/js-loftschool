@@ -35,11 +35,11 @@ function map(array, fn) {
  */
 /* не работает */
 function reduce(array, fn, initial) {
-  let tmpArray = [];
+    let tmpArray = [];
 
-  for (let i = 0; i < array.lenght; i++) {
-    tmpArray[i] = fn(array[i], i, array)
-  }
+    for (let i = 0; i < array.lenght; i++) {
+        tmpArray[i] = fn(array[i], i, array)
+    }
 }
 
 /*
@@ -50,9 +50,9 @@ function reduce(array, fn, initial) {
  Пример:
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
-/* сделана */
+/* сделано */
 function upperProps(obj) {
-    let tmpArrayLower = [], 
+    let tmpArrayLower = [],
         tmpArrayUpper = [];
 
     for (let item in obj) {
@@ -73,7 +73,32 @@ function upperProps(obj) {
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
+/*ещё нет*/
 function slice(array, from, to) {
+    var arr = [1, 2, 3, 4, 67, 8];
+
+    console.log(slice(arr, 1, 5));
+
+    function slice(array, from, to) {
+        if (!from && !to) {
+            return array;
+        }
+        if (from && !to) {
+            to = array.length;
+            var tmp = [];
+            for (i = from; i < to; i++) {
+                tmp.push(array[i]);
+            }
+            return tmp;
+        } else {
+            var tmp = [];
+            for (i = from; i < to; i++) {
+                tmp.push(array[i]);
+            }
+            return tmp;
+        }
+        return tmp;
+    }
 }
 
 /*
@@ -82,6 +107,7 @@ function slice(array, from, to) {
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
+/*ещё нет*/
 function createProxy(obj) {
     /*let proxy = new Proxy(obj,{
       set(target, prop, value){
@@ -93,28 +119,28 @@ function createProxy(obj) {
     return proxy.obj*/
 
 
-/*
+    /*
 
-    function createProxy(obj) {
-      console.log(obj)
-        let proxy = new Proxy(obj,{
-          set(target, prop, value){
-            target[prop] = value;
-            return true;
-          }
-    
-        })
-        return proxy.obj
-    }
-    
-    console.log(createProxy({ name: 324, lastName: 213 }));*/
+        function createProxy(obj) {
+          console.log(obj)
+            let proxy = new Proxy(obj,{
+              set(target, prop, value){
+                target[prop] = value;
+                return true;
+              }
+        
+            })
+            return proxy.obj
+        }
+        
+        console.log(createProxy({ name: 324, lastName: 213 }));*/
 }
 
 export {
-  forEach,
-  map,
-  reduce,
-  upperProps,
-  slice,
-  createProxy
+    forEach,
+    map,
+    reduce,
+    upperProps,
+    slice,
+    createProxy
 };
