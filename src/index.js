@@ -16,7 +16,32 @@
    isAllTrue([1, 2, 3, 4, 5], n => n < 10) // вернет true
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
+
 function isAllTrue(array, fn) {
+    let isTrue = 0,
+        isFalse = 0,
+        tmp = false;
+
+    if (array.length <= 0 || !Array.isArray(array)) {
+        throw new Error("empty array");
+    } else if (typeof(fn) != "function") {
+        throw new Error("fn is not a function");
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            let tmp = fn(array[i]);
+            if (tmp) {
+                isTrue++;
+            }
+            if (!tmp) {
+                isFalse++;
+            }
+        }
+        if (isFalse > 0) {
+            return false;
+        } else if (array.length == isTrue) {
+            return true;
+        }
+    }
 }
 
 /*
@@ -36,6 +61,30 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn) {
+    let isTrue = 0,
+        isFalse = 0,
+        tmp = false;
+
+    if (array.length <= 0 || !Array.isArray(array)) {
+        throw new Error("empty array");
+    } else if (typeof(fn) != "function") {
+        throw new Error("fn is not a function");
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            let tmp = fn(array[i])
+            if (tmp) {
+                isTrue++;
+            }
+            if (!tmp) {
+                isFalse++;
+            }
+        }
+        if (isTrue > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 /*
@@ -50,7 +99,23 @@ function isSomeTrue(array, fn) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
+    let tmpArray = [];
+
+    if (typeof(fn) != "function") {
+        throw new Error("fn is not a function");
+    } else {
+        for (let i = 1; i < arguments.length; i++) {
+            try {
+                fn(arguments[i])
+            } catch (e) {
+                tmpArray.push(arguments[i]);
+            }
+        }
+        return tmpArray;
+    }
+
 }
+
 
 /*
  Задание 4:
@@ -70,6 +135,25 @@ function returnBadArguments(fn) {
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator() {
+
+
+    calc: {
+        function sum(a, b) {
+            return a + b;
+        }
+
+        function dif(a, b) {
+            return a - b;
+        }
+
+        function div(a, b) {
+            return a - b;
+        }
+
+        function mul(a, b) {
+            return a - b;
+        }
+    }
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
