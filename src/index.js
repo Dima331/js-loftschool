@@ -7,8 +7,8 @@
  Функция должна вернуть true только если fn вернула true для всех элементов массива
 
  1.2: Необходимо выбрасывать исключение в случаях:
-   - array не массив или пустой массив (с текстом "empty array")
-   - fn не является функцией (с текстом "fn is not a function")
+   - array не массив или пустой массив (с текстом 'empty array')
+   - fn не является функцией (с текстом 'fn is not a function')
 
  Зарпещено использовать встроенные методы для работы с массивами
 
@@ -23,12 +23,12 @@ function isAllTrue(array, fn) {
         tmp = false;
 
     if (array.length <= 0 || !Array.isArray(array)) {
-        throw new Error("empty array");
-    } else if (typeof(fn) != "function") {
-        throw new Error("fn is not a function");
+        throw new Error('empty array');
+    } else if (typeof(fn) != 'function') {
+        throw new Error('fn is not a function');
     } else {
         for (let i = 0; i < array.length; i++) {
-            let tmp = fn(array[i]);
+            tmp = fn(array[i]);
             if (tmp) {
                 isTrue++;
             }
@@ -51,8 +51,8 @@ function isAllTrue(array, fn) {
  Функция должна вернуть true если fn вернула true хотя бы для одного из элементов массива
 
  2.2: Необходимо выбрасывать исключение в случаях:
-   - array не массив или пустой массив (с текстом "empty array")
-   - fn не является функцией (с текстом "fn is not a function")
+   - array не массив или пустой массив (с текстом 'empty array')
+   - fn не является функцией (с текстом 'fn is not a function')
 
  Зарпещено использовать встроенные методы для работы с массивами
 
@@ -62,28 +62,25 @@ function isAllTrue(array, fn) {
  */
 function isSomeTrue(array, fn) {
     let isTrue = 0,
-        isFalse = 0,
         tmp = false;
 
     if (array.length <= 0 || !Array.isArray(array)) {
-        throw new Error("empty array");
-    } else if (typeof(fn) != "function") {
-        throw new Error("fn is not a function");
+        throw new Error('empty array');
+    } else if (typeof(fn) != 'function') {
+        throw new Error('fn is not a function');
     } else {
         for (let i = 0; i < array.length; i++) {
-            let tmp = fn(array[i])
+            tmp = fn(array[i])
             if (tmp) {
                 isTrue++;
             }
-            if (!tmp) {
-                isFalse++;
-            }
         }
         if (isTrue > 0) {
-            return true
-        } else {
-            return false
+
+            return true;
         }
+
+        return false;
     }
 }
 
@@ -96,13 +93,13 @@ function isSomeTrue(array, fn) {
  3.2: Функция должна вернуть массив аргументов, для которых fn выбросила исключение
 
  3.3: Необходимо выбрасывать исключение в случаях:
-   - fn не является функцией (с текстом "fn is not a function")
+   - fn не является функцией (с текстом 'fn is not a function')
  */
 function returnBadArguments(fn) {
     let tmpArray = [];
 
-    if (typeof(fn) != "function") {
-        throw new Error("fn is not a function");
+    if (typeof(fn) != 'function') {
+        throw new Error('fn is not a function');
     } else {
         for (let i = 1; i < arguments.length; i++) {
             try {
@@ -111,11 +108,10 @@ function returnBadArguments(fn) {
                 tmpArray.push(arguments[i]);
             }
         }
+
         return tmpArray;
     }
-
 }
-
 
 /*
  Задание 4:
@@ -131,29 +127,52 @@ function returnBadArguments(fn) {
  Количество передаваемых в методы аргументов заранее неизвестно
 
  4.3: Необходимо выбрасывать исключение в случаях:
-   - number не является числом (с текстом "number is not a number")
-   - какой-либо из аргументов div является нулем (с текстом "division by 0")
+   - number не является числом (с текстом 'number is not a number')
+   - какой-либо из аргументов div является нулем (с текстом 'division by 0')
  */
-function calculator() {
+function calculator(number = 0) {
 
+    if (typeof(number) != 'number') {
+        throw new Error('number is not a number');
+    }
 
-    calc: {
-        function sum(a, b) {
-            return a + b;
-        }
+    let calc = {
+        sum: function() {
+            for (let i = 0; i < arguments.length; i++) {
+                number += arguments[i];
+            }
 
-        function dif(a, b) {
-            return a - b;
-        }
+            return number;
+        },
 
-        function div(a, b) {
-            return a - b;
-        }
+        dif: function() {
+            for (let i = 0; i < arguments.length; i++) {
+                number -= arguments[i];
+            }
 
-        function mul(a, b) {
-            return a - b;
+            return number;
+        },
+        div: function() {
+            for (let i = 0; i < arguments.length; i++) {
+                if (arguments[i] == 0) {
+                    throw new Error('division by 0');
+                } else {
+                    number /= arguments[i];
+                }
+            }
+
+            return number;
+        },
+        mul: function() {
+            for (let i = 0; i < arguments.length; i++) {
+                number *= arguments[i];
+            }
+
+            return number;
         }
     }
+
+    return calc;
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
