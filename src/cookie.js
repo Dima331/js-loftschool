@@ -31,15 +31,20 @@
    const newDiv = document.createElement('div');
    homeworkContainer.appendChild(newDiv);
  */
+
 const homeworkContainer = document.querySelector('#homework-container');
 // текстовое поле для фильтрации cookie
+
 const filterNameInput = homeworkContainer.querySelector('#filter-name-input');
 // текстовое поле с именем cookie
 const addNameInput = homeworkContainer.querySelector('#add-name-input');
+
 // текстовое поле со значением cookie
 const addValueInput = homeworkContainer.querySelector('#add-value-input');
+
 // кнопка "добавить cookie"
 const addButton = homeworkContainer.querySelector('#add-button');
+
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
@@ -47,6 +52,50 @@ filterNameInput.addEventListener('keyup', function() {
     // здесь можно обработать нажатия на клавиши внутри текстового поля для фильтрации cookie
 });
 
-addButton.addEventListener('click', () => {
-    // здесь можно обработать нажатие на кнопку "добавить cookie"
+function allGetCookies() {
+    return document.cookie
+        .split('; ')
+        .filter(Boolean)
+        .map(cookie => cookie.match(/^([^=]+)=(.+)/))
+        .reduce((obj, [, name, value]) => {
+            obj[name] = value;
+
+            return obj;
+        }, {});
+}
+
+printCookie();
+
+function checked(full, chunk) {
+    if (full.toLowerCase().indexOf(chunk.toLowerCase()) !== -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+listTable.addEventListener('click', function(e) {
+    if (e.target.dataset.key) {
+        document.cookie = e.target.dataset.key + `=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+    }
+    printCookie();
 });
+
+filterNameInput.addEventListener('keyup', function() {
+    printCookie();
+});
+
+addButton.addEventListener('click', () => {
+    document.cookie = `${addNameInput.value} = ${addValueInput.value}`;
+    printCookie();
+});
+
+function printCookie() {
+    const cookies = allGetCookies();
+    listTable.innerHTML = '';
+    for (let key in cookies) {
+        if (!(checked(key, filterNameInput.value) || checked(cookies[key], filterNameInput.value))) continue;
+        listTable.innerHTML += `<tr><td class="first_td">${key}</td><td>${cookies[key]}</td><td><button class="del" 
+        data-key="${key}">Удалить</button></td></tr>`;
+    }
+}
